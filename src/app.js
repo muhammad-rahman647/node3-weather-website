@@ -1,41 +1,42 @@
-const path = require('path');
-const express = require('express');
-const geocode = require('./utils/geocode');
-const forecast = require('./utils/forecast');
+const path = require("path");
+const express = require("express");
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 
 const app = express();
-const publicDirectoryPath = path.join(__dirname, '../public');
-const viewsPath = path.join(__dirname, '../views');
+const port = process.env.PORT || 3000;
+const publicDirectoryPath = path.join(__dirname, "../public");
+const viewsPath = path.join(__dirname, "../views");
 
-app.set('view engine', 'pug');
-app.set('views', viewsPath);
+app.set("view engine", "pug");
+app.set("views", viewsPath);
 app.use(express.static(publicDirectoryPath));
 
-app.get('/', (req, res) => {
-  res.status(200).render('Home', {
-    title: 'Weather',
-    name: 'Rahman Sheikh'
+app.get("/", (req, res) => {
+  res.status(200).render("Home", {
+    title: "Weather",
+    name: "Rahman Sheikh"
   });
 });
 
-app.get('/help', (req, res) => {
-  res.status(200).render('help', {
-    helptext: 'This is some helpful text',
-    title: 'Help'
+app.get("/help", (req, res) => {
+  res.status(200).render("help", {
+    helptext: "This is some helpful text",
+    title: "Help"
   });
 });
 
-app.get('/about', (req, res) => {
-  res.status(200).render('about', {
-    title: 'About me',
-    aboutText: 'This is about page'
+app.get("/about", (req, res) => {
+  res.status(200).render("about", {
+    title: "About me",
+    aboutText: "This is about page"
   });
 });
 
-app.get('/weather', (req, res) => {
+app.get("/weather", (req, res) => {
   if (!req.query.address) {
     return res.send({
-      error: 'You must provide an address'
+      error: "You must provide an address"
     });
   }
 
@@ -61,6 +62,6 @@ app.get('/weather', (req, res) => {
   );
 });
 
-app.listen(3000, () => {
-  console.log('Server is running is on port 3000.');
+app.listen(port, () => {
+  console.log("Server is running is on port " + port);
 });
